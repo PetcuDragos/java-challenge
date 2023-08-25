@@ -17,7 +17,7 @@ The Client check operation should check the document id validity (whether it's e
 
 - java 11
 - gradle
-- springboot 2.4.x
+- springboot 2.7.x
 - junit5
 - mybatis
 - liquibase
