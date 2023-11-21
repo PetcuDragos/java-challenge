@@ -9,11 +9,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import ro.codecrafters.BankingSystem.api.ClientExistenceApi;
 import ro.codecrafters.BankingSystem.api.ClientReputationApi;
+import ro.codecrafters.BankingSystem.util.Risk;
 
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -25,6 +29,9 @@ public class BankUserControllerTest {
     @MockBean
     private ClientReputationApi clientReputationApi;
 
+    @MockBean
+    private ClientExistenceApi clientExistenceApi;
+
     @Autowired
     public BankUserControllerTest(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
@@ -33,10 +40,15 @@ public class BankUserControllerTest {
     @Test
     public void checkClient_shouldReturn200_whenExpirationDateIsPresent() throws Exception {
         Mockito.when(clientReputationApi.getClientReputation(any())).thenReturn(100);
+        Mockito.when(clientExistenceApi.checkClientExistence(any())).thenReturn(false);
+
         mockMvc.perform(post("/clients/verify")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"expirationDate\":\"2025-01-01\"}"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("validExpirationDate", is(true)))
+                .andExpect(jsonPath("risk", is(Risk.HIGH_RISK.getMessage())))
+                .andExpect(jsonPath("clientAlreadyExisting", is(false)));
     }
 
     @Test
@@ -45,10 +57,12 @@ public class BankUserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isOk());
+
         mockMvc.perform(post("/clients/generate?type=DENIAL")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isOk());
+
         mockMvc.perform(post("/clients/generate?type=WRONG")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))

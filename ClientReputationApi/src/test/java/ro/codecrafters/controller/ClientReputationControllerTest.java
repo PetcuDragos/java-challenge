@@ -23,7 +23,7 @@ class ClientReputationControllerTest {
     }
 
     @Test
-    public void getReputationOfClient_ExpectStatusOkAndValue10_WhenNationalIdStartsWith2() throws Exception {
+    public void getReputationOfClient_expectStatusOkAndValue10_whenNationalIdStartsWith2() throws Exception {
         mockMvc.perform(post("/clients/reputation")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"nationalId\":\"2990101030021\"}"))
@@ -32,7 +32,7 @@ class ClientReputationControllerTest {
     }
 
     @Test
-    public void getReputationOfClient_ExpectStatusOkAndValue60_WhenNationalIdStartsWith1() throws Exception {
+    public void getReputationOfClient_expectStatusOkAndValue60_whenNationalIdStartsWith1() throws Exception {
         mockMvc.perform(post("/clients/reputation")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"nationalId\":\"1990101030021\"}"))
@@ -41,7 +41,7 @@ class ClientReputationControllerTest {
     }
 
     @Test
-    public void getReputationOfClient_ExpectStatusOkAndValue100_WhenNationalIdNotStartingWith1Or2() throws Exception {
+    public void getReputationOfClient_expectStatusOkAndValue100_whenNationalIdNotStartingWith1Or2() throws Exception {
         mockMvc.perform(post("/clients/reputation")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"nationalId\":\"6990101030021\"}"))

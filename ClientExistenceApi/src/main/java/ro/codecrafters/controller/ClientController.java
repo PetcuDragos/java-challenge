@@ -1,6 +1,5 @@
 package ro.codecrafters.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +20,6 @@ public class ClientController {
     @PostMapping("clients/existence")
     public ResponseEntity<Boolean> checkClientExistence(@RequestBody ClientDataDto clientDataDto) {
         boolean clientExists = clientService.checkClientExistence(clientDataDto);
-        return new ResponseEntity<>(clientExists, HttpStatus.OK);
+        return ResponseEntity.ok(clientExists);
     }
 }

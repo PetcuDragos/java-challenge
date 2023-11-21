@@ -8,7 +8,8 @@ import ro.codecrafters.BankingSystem.dto.ClientReportDto;
 import ro.codecrafters.BankingSystem.dto.DocumentType;
 import ro.codecrafters.BankingSystem.util.Risk;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 
 @Service
@@ -21,14 +22,17 @@ public class BankUserService {
         this.clientReputationApi = clientReputationApi;
         this.clientExistenceApi = clientExistenceApi;
     }
-    public File generateDocumentWithType(DocumentType documentType) {
-        String filePathForDocumentType = getFilePathForDocumentType(documentType);
-        return new File(filePathForDocumentType);
+
+    public byte[] generateDocumentWithType(DocumentType documentType) throws IOException {
+        InputStream resourceAsStream = getClass().getResourceAsStream(getFilePathForDocumentType(documentType));
+        byte[] bytes = resourceAsStream.readAllBytes();
+        resourceAsStream.close();
+        return bytes;
     }
 
     private String getFilePathForDocumentType(DocumentType documentType) {
-        if (documentType == DocumentType.ENROLMENT) return "static/generatedEnrolmentFile.txt";
-        return "static/generatedDenialFile.txt";
+        if (documentType == DocumentType.ENROLMENT) return "/static/generatedEnrolmentFile.txt";
+        return "/static/generatedDenialFile.txt";
     }
 
     public ClientReportDto checkClientData(ClientDataDto clientDataDto) {

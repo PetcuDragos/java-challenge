@@ -1,6 +1,7 @@
 package ro.codecrafters.BankingSystem.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,7 +10,7 @@ import ro.codecrafters.BankingSystem.dto.ClientReportDto;
 import ro.codecrafters.BankingSystem.dto.DocumentType;
 import ro.codecrafters.BankingSystem.service.BankUserService;
 
-import java.io.File;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/clients")
@@ -23,12 +24,12 @@ public class BankUserController {
 
     @PostMapping("/verify")
     public ResponseEntity<ClientReportDto> checkClient(@RequestBody ClientDataDto clientDataDto) {
-        return new ResponseEntity<>(bankUserService.checkClientData(clientDataDto), HttpStatus.OK);
+        return ResponseEntity.ok(bankUserService.checkClientData(clientDataDto));
     }
 
-    @PostMapping("/generate")
-    public ResponseEntity<File> generateDocument(@RequestParam("type") DocumentType documentType,
-                                                 @RequestBody ClientDataDto clientDataDto) {
+    @PostMapping(value = "/generate", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> generateDocument(@RequestParam("type") DocumentType documentType,
+                                                   @RequestBody ClientDataDto clientDataDto) throws IOException {
         return new ResponseEntity<>(bankUserService.generateDocumentWithType(documentType), HttpStatus.OK);
     }
 

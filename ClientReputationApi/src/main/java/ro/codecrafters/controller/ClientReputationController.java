@@ -1,6 +1,5 @@
 package ro.codecrafters.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +19,6 @@ public class ClientReputationController {
 
     @PostMapping("/clients/reputation")
     public ResponseEntity<Integer> getReputationOfClient(@RequestBody ClientDataDto clientDataDto) {
-        return new ResponseEntity<>(clientReputationService.calculateClientReputation(clientDataDto), HttpStatus.OK);
+        return ResponseEntity.ok(clientReputationService.calculateClientReputation(clientDataDto));
     }
 }
