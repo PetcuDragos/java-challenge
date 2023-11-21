@@ -38,13 +38,19 @@ public class BankUserControllerTest {
     }
 
     @Test
-    public void checkClient_shouldReturn200_whenExpirationDateIsPresent() throws Exception {
+    public void checkClient_shouldReturn200_whenAllFieldsArePresentAndValidAndApisAreWorking() throws Exception {
         Mockito.when(clientReputationApi.getClientReputation(any())).thenReturn(100);
         Mockito.when(clientExistenceApi.checkClientExistence(any())).thenReturn(false);
 
+        String jsonInput = "{" +
+                "\"creationDate\": \"2023-02-02\"," +
+                "\"expirationDate\" : \"2024-01-01\"," +
+                "\"nationalId\" : \"1990101030021\"," +
+                "\"fullName\" : \"Dragos\"}";
+
         mockMvc.perform(post("/clients/verify")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"expirationDate\":\"2025-01-01\"}"))
+                        .content(jsonInput))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("validExpirationDate", is(true)))
                 .andExpect(jsonPath("risk", is(Risk.HIGH_RISK.getMessage())))

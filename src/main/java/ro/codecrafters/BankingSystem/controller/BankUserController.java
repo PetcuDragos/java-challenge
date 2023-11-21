@@ -1,8 +1,10 @@
 package ro.codecrafters.BankingSystem.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ro.codecrafters.BankingSystem.dto.ClientDataDto;
@@ -13,6 +15,7 @@ import ro.codecrafters.BankingSystem.service.BankUserService;
 import java.io.IOException;
 
 @RestController
+@Validated
 @RequestMapping("/clients")
 @SuppressWarnings("unused")
 public class BankUserController {
@@ -23,7 +26,7 @@ public class BankUserController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<ClientReportDto> checkClient(@RequestBody ClientDataDto clientDataDto) {
+    public ResponseEntity<ClientReportDto> checkClient(@RequestBody @Valid ClientDataDto clientDataDto) {
         return ResponseEntity.ok(bankUserService.checkClientData(clientDataDto));
     }
 
