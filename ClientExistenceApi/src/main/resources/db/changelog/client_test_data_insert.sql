@@ -1,0 +1,2 @@
+INSERT INTO client VALUES ('2990101030021', 'Andreea');
+INSERT INTO client VALUES ('1990101030021', 'Dragos');

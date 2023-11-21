@@ -26,7 +26,7 @@ class ClientReputationControllerTest {
     public void getReputationOfClient_ExpectStatusOkAndValue10_WhenNationalIdStartsWith2() throws Exception {
         mockMvc.perform(post("/clients/reputation")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"nationalId\":\"299010103002\"}"))
+                        .content("{\"nationalId\":\"2990101030021\"}"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("10"));
     }
@@ -35,7 +35,7 @@ class ClientReputationControllerTest {
     public void getReputationOfClient_ExpectStatusOkAndValue60_WhenNationalIdStartsWith1() throws Exception {
         mockMvc.perform(post("/clients/reputation")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"nationalId\":\"199010103002\"}"))
+                        .content("{\"nationalId\":\"1990101030021\"}"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("60"));
     }
@@ -44,7 +44,7 @@ class ClientReputationControllerTest {
     public void getReputationOfClient_ExpectStatusOkAndValue100_WhenNationalIdNotStartingWith1Or2() throws Exception {
         mockMvc.perform(post("/clients/reputation")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"nationalId\":\"699010103002\"}"))
+                        .content("{\"nationalId\":\"6990101030021\"}"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("100"));
     }

@@ -1,6 +1,7 @@
 package ro.codecrafters.BankingSystem.service;
 
 import org.springframework.stereotype.Service;
+import ro.codecrafters.BankingSystem.api.ClientExistenceApi;
 import ro.codecrafters.BankingSystem.api.ClientReputationApi;
 import ro.codecrafters.BankingSystem.dto.ClientDataDto;
 import ro.codecrafters.BankingSystem.dto.ClientReportDto;
@@ -14,9 +15,11 @@ import java.time.LocalDate;
 public class BankUserService {
 
     private final ClientReputationApi clientReputationApi;
+    private final ClientExistenceApi clientExistenceApi;
 
-    public BankUserService(ClientReputationApi clientReputationApi) {
+    public BankUserService(ClientReputationApi clientReputationApi, ClientExistenceApi clientExistenceApi) {
         this.clientReputationApi = clientReputationApi;
+        this.clientExistenceApi = clientExistenceApi;
     }
     public File generateDocumentWithType(DocumentType documentType) {
         String filePathForDocumentType = getFilePathForDocumentType(documentType);
@@ -30,8 +33,8 @@ public class BankUserService {
 
     public ClientReportDto checkClientData(ClientDataDto clientDataDto) {
         boolean validExpirationDate = clientDataDto.getExpirationDate().isAfter(LocalDate.now());
-        // todo: create other user existence through external api
         Integer reputation = clientReputationApi.getClientReputation(clientDataDto);
-        return new ClientReportDto(validExpirationDate, Risk.getEnumByValue(reputation).message, true);
+        Boolean existence = clientExistenceApi.checkClientExistence(clientDataDto);
+        return new ClientReportDto(validExpirationDate, Risk.getEnumByValue(reputation).getMessage(), existence);
     }
 }
