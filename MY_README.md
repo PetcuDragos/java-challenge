@@ -6,11 +6,11 @@ If you want to run the application, there are 2 ways of running it.
 1) With Docker Desktop
 You need to have installed Docker Desktop
 
-In command line go to module ClientExistenceApi and execute command "docker build -t existence"
+In command line go to module ClientExistenceApi and execute command "docker build -t existence ."
 
-In command line go to module ClientReputationApi and execute command "docker build -t reputation"
+In command line go to module ClientReputationApi and execute command "docker build -t reputation ."
 
-In command line go to root of the project and execute command "docker build -t banking"
+In command line go to root of the project and execute command "docker build -t banking ."
 
 In command line go to root of the project and execute command "docker compose up"
 
