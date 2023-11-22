@@ -43,6 +43,7 @@ dependencyManagement {
 
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder-jammy-base:latest'
+	imageName = "banking"
 }
 
 tasks.named('test') {

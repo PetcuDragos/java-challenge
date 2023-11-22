@@ -1,0 +1,24 @@
+version: "3.2"
+services:
+  reputation:
+    image: reputation
+    ports:
+      - "8081:8081"
+    networks:
+      - data-service-network
+
+  existence:
+    image: existence
+    ports:
+      - "8082:8082"
+    networks:
+      - data-service-network
+
+  banking:
+    image: banking
+    ports:
+      - "8080:8080"
+    networks:
+      - data-service-network
+networks:
+  data-service-network: {}

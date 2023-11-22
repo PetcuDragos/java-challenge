@@ -30,6 +30,7 @@ dependencies {
 
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder-jammy-base:latest'
+	imageName = "reputation"
 }
 
 tasks.named('test') {

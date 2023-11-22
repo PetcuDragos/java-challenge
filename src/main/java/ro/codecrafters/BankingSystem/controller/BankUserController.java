@@ -39,6 +39,9 @@ public class BankUserController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadDocument(@RequestParam("type") DocumentType documentType,
                                                  @RequestBody MultipartFile file) {
+        if (file == null || file.getOriginalFilename() == null) {
+            return ResponseEntity.badRequest().body("No valid file was introduced");
+        }
         return ResponseEntity.ok("Uploaded " + documentType + " file with name " + file.getOriginalFilename());
     }
 
