@@ -18,13 +18,21 @@ The application should be up and running.
 
 2) From IDE, without Docker Desktop
 
-Open project in IDE
+Open main project in IDE
 
 In application.properties uncomment "spring.profiles.active=dev"
 
-Then go to each module main function and run it.
+Run the project from BankingSystemApplication main function
 
-The app should be up and running.
+Open ClientExistenceApi in IDE in another window
+
+Run the existence app from ClientExistenceApiApplication main function
+
+Open ClientReputationApi in IDE in another window
+
+Run the reputation app from ClientReputationApiApplication main function
+
+The app should be good to go now.
 
 
 
